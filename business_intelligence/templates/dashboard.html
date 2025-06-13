@@ -1,24 +1,69 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Movie Dashboard</title>
     <style>
-        body { font-family: sans-serif; display: flex; justify-content: center; align-items: center; flex-direction: column; }
-        .chart { margin: 20px; padding: 20px; border: 1px solid #ccc; border-radius: 8px; }
+      body {
+        font-family: sans-serif;
+        margin: 20px;
+        background-color: #f4f4f9;
+      }
+      .chart-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        justify-content: center;
+        margin-bottom: 30px;
+      }
+      .chart {
+        border: 1px solid #ccc;
+        padding: 10px;
+        box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);
+        background-color: #fff;
+        border-radius: 8px;
+      }
+      h1,
+      h2 {
+        text-align: center;
+        color: #333;
+      }
+      hr {
+        border: 0;
+        height: 1px;
+        background: #ddd;
+        margin: 40px 0;
+      }
     </style>
-</head>
-<body>
-    <h1>Dashboard Intelijen Bisnis Film</h1>
+  </head>
+  <body>
+    <h1>Business Intelligence Dashboard - Movie Data</h1>
 
-    <div class="chart">
-        {{ chart_genre|safe }}
+    <hr />
+    <h2>Analisis Data Keseluruhan</h2>
+    <div class="chart-container">
+      <div class="chart">{{ chart_genre|safe }}</div>
+      <div class="chart">{{ chart_country|safe }}</div>
     </div>
 
-    <div class="chart">
-        {{ chart_country|safe }}
+    <hr />
+    <h2>Prediksi Popularitas Genre di Masa Mendatang</h2>
+    <div class="chart-container">
+      <div class="chart">{{ chart_prediction|safe }}</div>
     </div>
 
-</body>
+    <h2>Perbandingan Data Asli Genre dengan Garis Tren (Regresi)</h2>
+    <div class="chart-container">
+      {% for chart in comparison_charts %}
+      <div class="chart">{{ chart|safe }}</div>
+      {% endfor %}
+    </div>
+
+    <hr />
+    <h2>10 Film dengan Rating Tertinggi</h2>
+    <div class="chart-container">
+      <div class="chart">{{ chart_title_performance|safe }}</div>
+    </div>
+  </body>
 </html>
