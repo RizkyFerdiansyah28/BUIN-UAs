@@ -1,3 +1,38 @@
-from django.shortcuts import render
+# rizkyferdiansyah28/buin-uas/BUIN-UAs-32d0dee03b5db7f7819b87c49866eae946afb7cd/business_intelligence/views.py
 
-# Create your views here.
+from django.shortcuts import render
+from .models import Movie
+from django.db.models import Count
+import plotly.express as px
+
+def movie_dashboard(request):
+    # Query 1: Menghitung jumlah film per genre
+    genre_counts = Movie.objects.values('genre').annotate(count=Count('genre')).order_by('-count')
+    
+    # Query 2: Menghitung jumlah film per negara
+    country_counts = Movie.objects.values('country').annotate(count=Count('country')).order_by('-count')
+
+    # Membuat grafik bar untuk genre
+    fig_genre = px.bar(
+        [item for item in genre_counts],
+        x='genre',
+        y='count',
+        title='Jumlah Film Berdasarkan Genre'
+    )
+    chart_genre = fig_genre.to_html()
+
+    # Membuat grafik pie untuk negara
+    fig_country = px.pie(
+        [item for item in country_counts],
+        names='country',
+        values='count',
+        title='Distribusi Film Berdasarkan Negara'
+    )
+    chart_country = fig_country.to_html()
+
+    context = {
+        'chart_genre': chart_genre,
+        'chart_country': chart_country
+    }
+    
+    return render(request, 'business_intelligence/dashboard.html', context)
