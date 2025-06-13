@@ -16,9 +16,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+# Pastikan Anda mengimpor views dari aplikasi yang benar
 from business_intelligence import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('dashboard/', views.movie_dashboard, name='movie_dashboard'),
+    # Ganti 'views.dashboard' menjadi 'views.movie_dashboard'
+    path('', views.movie_dashboard, name='dashboard'), 
 ]

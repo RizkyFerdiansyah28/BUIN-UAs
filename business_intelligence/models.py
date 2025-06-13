@@ -7,6 +7,6 @@ class Movie(models.Model):
     director = models.CharField(max_length=255)
     year = models.IntegerField()
     country = models.CharField(max_length=255)
-    
+    rating = models.FloatField() # Field ini jelas ada
     def __str__(self):
         return self.title
